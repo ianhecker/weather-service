@@ -3,19 +3,22 @@ package weather
 import "encoding/json"
 
 type Weather struct {
-	Number      int    `json:"number"`
-	Name        string `json:"name"`
-	StartTime   string `json:"startTime"`
-	EndTime     string `json:"endTime"`
-	IsDaytime   bool   `json:"isDaytime"`
-	Temperature int    `json:"temperature"`
-	TempUnit    string `json:"temperatureUnit"`
-	WindSpeed   string `json:"windSpeed"`
-	WindDir     string `json:"windDirection"`
-	Icon        string `json:"icon"`
-	Short       string `json:"shortForecast"`
-	Detailed    string `json:"detailedForecast"`
+	Number           int              `json:"number"`
+	Name             string           `json:"name"`
+	StartTime        string           `json:"startTime"`
+	EndTime          string           `json:"endTime"`
+	IsDaytime        bool             `json:"isDaytime"`
+	Temperature      int              `json:"temperature"`
+	TempUnit         string           `json:"temperatureUnit"`
+	WindSpeed        string           `json:"windSpeed"`
+	WindDir          string           `json:"windDirection"`
+	Icon             string           `json:"icon"`
+	Short            string           `json:"shortForecast"`
+	Detailed         string           `json:"detailedForecast"`
+	Characterization Characterization `json:"characterization"`
 }
+
+func (weather Weather) CharacterizeWeather() {}
 
 func (weather *Weather) UnmarshalJSON(bytes []byte) error {
 	type Alias Weather
@@ -24,5 +27,9 @@ func (weather *Weather) UnmarshalJSON(bytes []byte) error {
 	if err := json.Unmarshal(bytes, &tmp); err != nil {
 		return err
 	}
+
+	characterization := MakeCharacterization(weather.Temperature)
+	weather.Characterization = characterization
+
 	return nil
 }

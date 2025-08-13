@@ -29,7 +29,7 @@ func main() {
 	err = weather.UnmarshalJSON(period)
 	checkErr(err)
 
-	fmt.Printf("%v\n", weather)
+	fmt.Printf("%+v\n", weather)
 }
 
 func checkErr(err error) {
