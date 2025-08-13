@@ -6,23 +6,37 @@ import (
 	"net/http"
 
 	"github.com/ianhecker/weather-service/client"
-	"github.com/ianhecker/weather-service/data"
+	"github.com/ianhecker/weather-service/response"
 	"github.com/ianhecker/weather-service/weather"
 )
 
 func main() {
 	client := client.NewClient()
 
-	request, err := client.NewRequest(http.MethodGet, "https://api.weather.gov/gridpoints/TOP/31,80/forecast")
+	req, err := client.NewRequest(http.MethodGet, "https://api.weather.gov/points/39.7456,-97.0892")
 	checkErr(err)
 
-	response, err := client.Do(request)
-
-	var data data.Data
-	err = data.UnmarshalJSON(response)
+	resp, err := client.Do(req)
 	checkErr(err)
 
-	period, err := data.GetPeriod(0)
+	var forecastURL response.ForecastURL
+	err = forecastURL.UnmarshalJSON(resp)
+	checkErr(err)
+
+	url, err := forecastURL.GetURL()
+	checkErr(err)
+
+	request, err := client.NewRequest(http.MethodGet, url)
+	checkErr(err)
+
+	resp, err = client.Do(request)
+	checkErr(err)
+
+	var periods response.Periods
+	err = periods.UnmarshalJSON(resp)
+	checkErr(err)
+
+	period, err := periods.GetPeriod(0)
 	checkErr(err)
 
 	var weather weather.Weather

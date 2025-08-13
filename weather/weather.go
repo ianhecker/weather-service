@@ -27,9 +27,7 @@ func (weather *Weather) UnmarshalJSON(bytes []byte) error {
 	if err := json.Unmarshal(bytes, &tmp); err != nil {
 		return err
 	}
-
-	characterization := MakeCharacterization(weather.Temperature)
-	weather.Characterization = characterization
+	weather.Characterization = MakeCharacterization(weather.Temperature)
 
 	return nil
 }
