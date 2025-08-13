@@ -5,9 +5,9 @@ import (
 	"log"
 	"net/http"
 
-	"jack.henry/weather-svc/client"
-	"jack.henry/weather-svc/data"
-	"jack.henry/weather-svc/weather"
+	"github.com/ianhecker/weather-service/client"
+	"github.com/ianhecker/weather-service/data"
+	"github.com/ianhecker/weather-service/weather"
 )
 
 func main() {
