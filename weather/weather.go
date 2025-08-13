@@ -3,7 +3,6 @@ package weather
 import "encoding/json"
 
 type Weather struct {
-	Number           int              `json:"number"`
 	Name             string           `json:"name"`
 	StartTime        string           `json:"startTime"`
 	EndTime          string           `json:"endTime"`
@@ -12,7 +11,6 @@ type Weather struct {
 	TempUnit         string           `json:"temperatureUnit"`
 	WindSpeed        string           `json:"windSpeed"`
 	WindDir          string           `json:"windDirection"`
-	Icon             string           `json:"icon"`
 	Short            string           `json:"shortForecast"`
 	Detailed         string           `json:"detailedForecast"`
 	Characterization Characterization `json:"characterization"`
